@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+:root {
+  --font-geist-sans: var(--font-geist-sans);
+  --font-geist-mono: var(--font-geist-mono);
+
+  /* Professional color palette inspired by the logo */
+  --navy: #0F2942;
+  --navy-dark: #0A1F32;
+  --navy-light: #1E3A5F;
+  --accent: #2563EB; /* Vibrant professional blue for CTAs */
+  --accent-hover: #1D4ED8;
+  --bg: #F8FAFC;
+  --bg-white: #FFFFFF;
+  --text-primary: #1E293B;
+  --text-muted: #64748B;
+  --border: #E2E8F0;
+  --success: #10B981;
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--text-primary);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  font-family: var(--font-geist-sans);
+  background: var(--bg);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom styles for premium feel */
+.nav-link {
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--navy);
+}
+
+.nav-link:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--navy);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover:after {
+  width: 100%;
+}
+
+.service-card {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.2s cubic-bezier(0.4, 0.0, 0.2, 1),
+              border-color 0.2s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  border-color: var(--navy-light);
+}
+
+.form-input {
+  transition: all 0.2s ease;
+}
+
+.form-input:focus {
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(15, 41, 66, 0.1);
+  outline: none;
+}
+
+.checkbox-label {
+  transition: all 0.2s ease;
+}
+
+.checkbox-label:hover {
+  color: var(--navy);
+}
+
+.cta-button {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cta-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 15px -3px rgb(37 99 235 / 0.3), 0 4px 6px -4px rgb(37 99 235 / 0.3);
+}
+
+.cta-button:active {
+  transform: translateY(0);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Form success state */
+.success-card {
+  animation: fadeInScale 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Section divider subtle */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border), transparent);
+}
