@@ -1,24 +1,11 @@
-import { MetadataRoute } from 'next';
+import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const base = "https://cpc-website-rho.vercel.app";
   return [
-    {
-      url: 'https://cpc-website-rho.vercel.app',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 1,
-    },
-    {
-      url: 'https://cpc-website-rho.vercel.app/#services',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://cpc-website-rho.vercel.app/#quote',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
+    { url: base, lastModified: new Date(), changeFrequency: "weekly", priority: 1 },
+    { url: `${base}/#services`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${base}/#about`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    { url: `${base}/#quote`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }

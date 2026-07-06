@@ -1,141 +1,222 @@
-const services = [
-  'Interior walls and ceilings',
-  'Trim, baseboards, and doors',
-  'Crown molding and detail work',
-  'Rental turnovers and refreshes',
-  'Pre-sale painting preparation',
-  'Accent walls and touch-ups',
-];
+"use client";
 
-const steps = [
-  ['01', 'Walk the space', 'We review the rooms, surfaces, timing, access, and finish expectations before work begins.'],
-  ['02', 'Protect and prepare', 'Floors, furniture, trim, and edges are protected. Minor wall issues are addressed before paint goes on.'],
-  ['03', 'Paint and review', 'Clean lines, steady communication, and a final walkthrough before the project is wrapped.'],
+import { useState } from "react";
+
+type FormData = {
+  fullName: string;
+  phone: string;
+  zipCode: string;
+  email: string;
+  details: string;
+  services: string[];
+};
+
+const services = ["Walls", "Ceilings", "Trim & Baseboards", "Crown Molding", "Doors", "Accent Walls", "Small Drywall Repair"];
+const serviceCards = [
+  ["Interior walls and ceilings", "Clean coverage, smooth edges, and a finish that makes the room feel renewed."],
+  ["Trim, doors, and baseboards", "Sharper lines around the details that buyers, tenants, and guests notice first."],
+  ["Rental and pre-sale refresh", "Fast, practical painting for turnovers, listings, and property value improvements."],
+  ["Small drywall repair", "Minor patching and preparation before paint so the final result looks complete."],
 ];
 
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState<FormData>({ fullName: "", phone: "", zipCode: "", email: "", details: "", services: [] });
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setMenuOpen(false);
+  };
+
+  const updateField = (name: keyof FormData, value: string) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: undefined }));
+  };
+
+  const toggleService = (service: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      services: prev.services.includes(service) ? prev.services.filter((item) => item !== service) : [...prev.services, service],
+    }));
+    setErrors((prev) => ({ ...prev, services: undefined }));
+  };
+
+  const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const nextErrors: Partial<Record<keyof FormData, string>> = {};
+    if (!formData.fullName.trim()) nextErrors.fullName = "Full name is required";
+    if (!formData.phone.trim()) nextErrors.phone = "Phone number is required";
+    if (!formData.zipCode.trim()) nextErrors.zipCode = "Project zip code is required";
+    if (!/^\S+@\S+\.\S+$/.test(formData.email)) nextErrors.email = "A valid email is required";
+    if (formData.services.length === 0) nextErrors.services = "Select at least one service";
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length === 0) {
+      console.log("Quote request", formData);
+      setSubmitted(true);
+    }
+  };
+
   return (
-    <main className="min-h-screen bg-[#f7f9fc] text-[#172033]">
+    <main className="min-h-screen bg-[#F8FAFC] text-[#1E293B]">
       <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 md:px-8">
-          <a href="#top" className="flex items-center gap-3" aria-label="Capital Property Care home">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
+          <button onClick={() => scrollTo("top")} className="flex items-center gap-3 text-left" aria-label="Go to homepage">
             <img src="/logo-optimized.webp" alt="Capital Property Care LLC" className="h-11 w-11 object-contain" />
-            <div className="leading-none">
-              <div className="text-xl font-semibold tracking-tight text-[#0f2942]">CAPITAL</div>
-              <div className="mt-1 text-[10px] font-semibold tracking-[0.18em] text-[#0f2942]">PROPERTY CARE LLC</div>
-            </div>
-          </a>
-          <nav className="hidden items-center gap-8 text-sm font-medium text-slate-700 md:flex">
-            <a href="#services" className="hover:text-[#0f2942]">Services</a>
-            <a href="#process" className="hover:text-[#0f2942]">Process</a>
-            <a href="#quote" className="hover:text-[#0f2942]">Quote</a>
+            <span>
+              <span className="block text-xl font-semibold tracking-tight text-[#0F2942]">CAPITAL</span>
+              <span className="-mt-1 block text-[10px] font-medium tracking-[1.5px] text-[#0F2942]">PROPERTY CARE LLC</span>
+            </span>
+          </button>
+
+          <nav className="hidden items-center gap-9 text-sm font-medium md:flex">
+            <button onClick={() => scrollTo("services")} className="nav-link text-slate-700">Services</button>
+            <button onClick={() => scrollTo("about")} className="nav-link text-slate-700">About</button>
+            <button onClick={() => scrollTo("quote")} className="nav-link text-slate-700">Request Quote</button>
           </nav>
-          <a href="#quote" className="rounded-full bg-[#f59e0b] px-5 py-3 text-xs font-bold tracking-wide text-white shadow-sm hover:bg-[#d97706] md:text-sm">
-            REQUEST QUOTE
-          </a>
+
+          <button onClick={() => scrollTo("quote")} className="hidden rounded-full bg-[#F59E0B] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#D97706] md:block">
+            REQUEST A PAINTING QUOTE
+          </button>
+
+          <button onClick={() => setMenuOpen((open) => !open)} className="rounded-lg p-2 text-[#0F2942] md:hidden" aria-label="Open navigation menu">
+            {menuOpen ? "Close" : "Menu"}
+          </button>
         </div>
+        {menuOpen && (
+          <div className="border-t bg-white px-6 py-5 md:hidden">
+            <div className="flex flex-col gap-4 text-left text-sm font-semibold text-slate-700">
+              <button onClick={() => scrollTo("services")} className="text-left">Services</button>
+              <button onClick={() => scrollTo("about")} className="text-left">About</button>
+              <button onClick={() => scrollTo("quote")} className="rounded-full bg-[#F59E0B] px-6 py-3 text-white">Request Quote</button>
+            </div>
+          </div>
+        )}
       </header>
 
-      <section id="top" className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-16 md:grid-cols-2 md:px-8 md:py-24">
+      <section id="top" className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-16 md:grid-cols-2 md:py-24">
         <div>
-          <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-[#d97706]">Interior Painting • Albany NY</p>
-          <h1 className="max-w-2xl text-5xl font-semibold leading-[1.02] tracking-[-0.04em] text-[#0f2942] md:text-7xl">
-            Adding Value to Your Home
-          </h1>
-          <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600 md:text-xl">
-            Capital Property Care LLC provides clean, reliable interior painting for homeowners, landlords, realtors, and property managers across Albany and the Capital Region.
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a href="#quote" className="rounded-full bg-[#f59e0b] px-7 py-4 text-center font-semibold text-white shadow-sm hover:bg-[#d97706]">Request a Painting Quote</a>
-            <a href="tel:8383865620" className="rounded-full border border-[#0f2942]/20 bg-white px-7 py-4 text-center font-semibold text-[#0f2942] hover:border-[#0f2942]/40">Call (838) 386-5620</a>
-          </div>
-          <div className="mt-8 grid max-w-xl grid-cols-3 gap-3 text-sm text-slate-600">
-            <div className="rounded-2xl bg-white p-4 shadow-sm"><strong className="block text-[#0f2942]">Insured</strong>Workmanship</div>
-            <div className="rounded-2xl bg-white p-4 shadow-sm"><strong className="block text-[#0f2942]">Clean</strong>Job sites</div>
-            <div className="rounded-2xl bg-white p-4 shadow-sm"><strong className="block text-[#0f2942]">Local</strong>Albany NY</div>
+          <p className="mb-4 text-sm font-semibold tracking-[0.22em] text-[#F59E0B]">INTERIOR PAINTING · ALBANY NY</p>
+          <h1 className="mb-6 text-5xl font-semibold leading-[1.04] tracking-[-1.5px] text-[#0F2942] md:text-6xl">Adding Value<br />to Your Home</h1>
+          <p className="mb-8 max-w-xl text-xl leading-relaxed text-slate-600">Capital Property Care LLC provides reliable interior painting for homeowners, landlords, realtors, and property managers across Albany and the Capital Region.</p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <button onClick={() => scrollTo("quote")} className="rounded-full bg-[#F59E0B] px-8 py-4 text-center font-semibold text-white shadow-sm transition hover:bg-[#D97706]">Request a Quote</button>
+            <a href="tel:8383865620" className="rounded-full border border-[#0F2942]/20 px-8 py-4 text-center font-semibold text-[#0F2942] transition hover:bg-white">Call (838) 386-5620</a>
           </div>
         </div>
-        <div className="rounded-[2rem] bg-white p-3 shadow-2xl shadow-slate-300/60">
-          <img src="/hero-living-room.webp" alt="Freshly painted living room interior" className="h-[420px] w-full rounded-[1.5rem] object-cover md:h-[520px]" />
+        <div className="rounded-[2rem] bg-white p-3 shadow-xl">
+          <img src="/hero-living-room.webp" alt="Freshly painted living room" className="h-[420px] w-full rounded-[1.5rem] object-cover" />
         </div>
       </section>
 
       <section id="services" className="bg-white py-20">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <div className="mb-10 max-w-3xl">
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.24em] text-[#d97706]">Services</p>
-            <h2 className="text-4xl font-semibold tracking-tight text-[#0f2942] md:text-5xl">Clean work. Professional finish. No confusion.</h2>
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-10 max-w-2xl">
+            <p className="mb-3 text-sm font-semibold tracking-[0.2em] text-[#F59E0B]">SERVICES</p>
+            <h2 className="text-4xl font-semibold tracking-tight text-[#0F2942]">Clean work. Professional finish. No drama.</h2>
           </div>
-          <div className="grid gap-5 md:grid-cols-3">
-            {services.map((service) => (
-              <div key={service} className="rounded-3xl border border-slate-200 bg-[#f7f9fc] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-[#0f2942] text-lg font-bold text-white">✓</div>
-                <h3 className="text-lg font-semibold text-[#0f2942]">{service}</h3>
-              </div>
+          <div className="grid gap-5 md:grid-cols-4">
+            {serviceCards.map(([title, text]) => (
+              <article key={title} className="card-hover rounded-2xl border border-slate-200 bg-[#F8FAFC] p-6 shadow-sm">
+                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[#0F2942] text-white">✓</div>
+                <h3 className="mb-2 text-lg font-semibold text-[#0F2942]">{title}</h3>
+                <p className="text-sm leading-6 text-slate-600">{text}</p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="process" className="mx-auto max-w-7xl px-5 py-20 md:px-8">
-        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div className="rounded-[2rem] bg-white p-3 shadow-xl">
-            <img src="/hero-living-room.webp" alt="Interior painting finish detail" className="h-[420px] w-full rounded-[1.5rem] object-cover" />
+      <section id="about" className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-20 md:grid-cols-2">
+        <div className="rounded-[2rem] bg-white p-3 shadow-xl">
+          <img src="/hero-living-room.webp" alt="Interior staircase and trim painting" className="h-[440px] w-full rounded-[1.5rem] object-cover" />
+        </div>
+        <div>
+          <p className="mb-3 text-sm font-semibold tracking-[0.2em] text-[#F59E0B]">ABOUT CPC</p>
+          <h2 className="mb-5 text-4xl font-semibold tracking-tight text-[#0F2942]">Built for homeowners who care about the final detail.</h2>
+          <p className="mb-5 text-lg leading-8 text-slate-600">Painting is not just color on a wall. It changes how a room feels, how a property shows, and how much confidence people have in the space.</p>
+          <p className="text-lg leading-8 text-slate-600">Capital Property Care LLC focuses on clean preparation, careful edges, responsible communication, and a finish that looks professional after the tools are packed away.</p>
+        </div>
+      </section>
+
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-10 max-w-2xl">
+            <p className="mb-3 text-sm font-semibold tracking-[0.2em] text-[#F59E0B]">PROCESS</p>
+            <h2 className="text-4xl font-semibold tracking-tight text-[#0F2942]">A simple process that keeps the job clear.</h2>
           </div>
-          <div>
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.24em] text-[#d97706]">Process</p>
-            <h2 className="mb-8 text-4xl font-semibold tracking-tight text-[#0f2942]">A clear process from first call to final walkthrough.</h2>
-            <div className="space-y-4">
-              {steps.map(([num, title, text]) => (
-                <div key={num} className="rounded-3xl bg-white p-6 shadow-sm">
-                  <div className="mb-2 text-sm font-bold text-[#d97706]">{num}</div>
-                  <h3 className="mb-2 text-2xl font-semibold text-[#0f2942]">{title}</h3>
-                  <p className="leading-7 text-slate-600">{text}</p>
-                </div>
-              ))}
-            </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {[["01", "Walkthrough", "We review the rooms, surfaces, timeline, and finish expectations."], ["02", "Preparation", "We protect floors and furniture, patch minor areas, and prepare surfaces properly."], ["03", "Finish", "We paint clean lines, review the work, and leave the space ready to use."]].map(([num, title, text]) => (
+              <article key={num} className="rounded-3xl bg-[#F8FAFC] p-8 shadow-sm">
+                <p className="mb-5 text-sm font-semibold text-[#F59E0B]">{num}</p>
+                <h3 className="mb-3 text-2xl font-semibold text-[#0F2942]">{title}</h3>
+                <p className="leading-relaxed text-slate-600">{text}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
-      <section id="quote" className="bg-[#0f2942] py-20 text-white">
-        <div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-2 md:px-8">
+      <section id="quote" className="bg-[#0F2942] py-20 text-white">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-2">
           <div>
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.24em] text-[#f59e0b]">Request a Quote</p>
-            <h2 className="mb-5 text-4xl font-semibold tracking-tight md:text-5xl">Tell us what needs painting.</h2>
-            <p className="max-w-lg text-lg leading-8 text-white/75">
-              Share the rooms, timeline, zip code, and any details that matter. Edward will follow up to discuss the job and next steps.
-            </p>
-            <div className="mt-8 space-y-3 text-white/80">
-              <p><strong className="text-white">Phone:</strong> <a href="tel:8383865620">(838) 386-5620</a></p>
-              <p><strong className="text-white">Email:</strong> <a href="mailto:edwardjones@capitalpropertycare.com">edwardjones@capitalpropertycare.com</a></p>
+            <p className="mb-3 text-sm font-semibold tracking-[0.2em] text-[#F59E0B]">REQUEST A QUOTE</p>
+            <h2 className="mb-5 text-4xl font-semibold tracking-tight">Tell us what needs painting.</h2>
+            <p className="mb-8 max-w-lg text-lg leading-relaxed text-white/75">Share the rooms, timeline, and zip code. Edward will follow up to discuss the project and next steps.</p>
+            <div className="space-y-2 text-white/80">
+              <p><strong className="text-white">Phone:</strong> (838) 386-5620</p>
+              <p><strong className="text-white">Email:</strong> edwardjones@capitalpropertycare.com</p>
               <p><strong className="text-white">Area:</strong> Albany and the Capital Region, NY</p>
             </div>
           </div>
-          <form action="mailto:edwardjones@capitalpropertycare.com" method="post" encType="text/plain" className="rounded-[2rem] bg-white p-6 text-[#172033] shadow-2xl md:p-8">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <input name="name" required placeholder="Full name" className="rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-[#0f2942]" />
-              <input name="phone" required placeholder="Phone" className="rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-[#0f2942]" />
-              <input name="email" type="email" required placeholder="Email" className="rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-[#0f2942]" />
-              <input name="zip" required placeholder="Project zip code" className="rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-[#0f2942]" />
+
+          {submitted ? (
+            <div className="rounded-3xl bg-white p-10 text-center text-[#1E293B] shadow-xl">
+              <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-2xl text-emerald-700">✓</div>
+              <h3 className="mb-3 text-3xl font-semibold text-[#0F2942]">Request received.</h3>
+              <p className="mx-auto max-w-sm text-slate-600">Thank you. We will contact you within 24 hours to discuss the painting project.</p>
+              <button onClick={() => setSubmitted(false)} className="mt-8 rounded-full border border-slate-300 px-6 py-3 font-semibold text-[#0F2942]">Send another request</button>
             </div>
-            <textarea name="details" rows={5} placeholder="Rooms, timeline, colors, and project details" className="mt-4 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-[#0f2942]" />
-            <button className="mt-5 w-full rounded-full bg-[#f59e0b] px-8 py-4 font-semibold text-white hover:bg-[#d97706]">Submit Request</button>
-            <p className="mt-4 text-center text-xs text-slate-500">A mail window will open so you can send the request directly.</p>
-          </form>
+          ) : (
+            <form onSubmit={submitForm} className="rounded-3xl bg-white p-8 text-[#1E293B] shadow-xl">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className="block"><span className="mb-1 block text-sm font-semibold">Full name</span><input value={formData.fullName} onChange={(e) => updateField("fullName", e.target.value)} className="input w-full rounded-xl border border-slate-300 px-4 py-3" /></label>
+                <label className="block"><span className="mb-1 block text-sm font-semibold">Phone</span><input value={formData.phone} onChange={(e) => updateField("phone", e.target.value)} className="input w-full rounded-xl border border-slate-300 px-4 py-3" /></label>
+                <label className="block"><span className="mb-1 block text-sm font-semibold">Email</span><input type="email" value={formData.email} onChange={(e) => updateField("email", e.target.value)} className="input w-full rounded-xl border border-slate-300 px-4 py-3" /></label>
+                <label className="block"><span className="mb-1 block text-sm font-semibold">Project zip code</span><input value={formData.zipCode} onChange={(e) => updateField("zipCode", e.target.value)} className="input w-full rounded-xl border border-slate-300 px-4 py-3" /></label>
+              </div>
+
+              <fieldset className="mt-5">
+                <legend className="mb-3 text-sm font-semibold">Services needed</legend>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {services.map((service) => (
+                    <label key={service} className="flex cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-4 py-3 text-sm hover:border-[#0F2942]/40">
+                      <input type="checkbox" checked={formData.services.includes(service)} onChange={() => toggleService(service)} className="h-4 w-4" />
+                      {service}
+                    </label>
+                  ))}
+                </div>
+                {errors.services && <p className="mt-2 text-sm text-red-600">{errors.services}</p>}
+              </fieldset>
+
+              <label className="mt-5 block"><span className="mb-1 block text-sm font-semibold">Project details</span><textarea rows={5} value={formData.details} onChange={(e) => updateField("details", e.target.value)} placeholder="Rooms, timeline, and details" className="input w-full rounded-xl border border-slate-300 px-4 py-3" /></label>
+              {(errors.fullName || errors.phone || errors.email || errors.zipCode) && <p className="mt-4 text-sm text-red-600">Please complete name, phone, email, and zip code.</p>}
+              <button type="submit" className="mt-6 w-full rounded-2xl bg-[#F59E0B] px-8 py-4 font-semibold text-white transition hover:bg-[#D97706]">SUBMIT REQUEST</button>
+              <p className="mt-4 text-center text-xs text-slate-500">We typically respond within 24 hours.</p>
+            </form>
+          )}
         </div>
       </section>
 
-      <footer className="bg-[#0a1f32] px-5 py-10 text-sm text-white/70 md:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-3">
-            <img src="/logo-optimized.webp" alt="Capital Property Care" className="h-10 w-10 brightness-0 invert" />
-            <div>
-              <div className="font-semibold text-white">Capital Property Care LLC</div>
-              <div>Interior Painting • Albany NY</div>
-            </div>
+      <footer className="bg-[#0A1F32] px-6 py-12 text-white/75">
+        <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-3">
+          <div>
+            <div className="mb-4 flex items-center gap-3"><img src="/logo-optimized.webp" alt="Capital Property Care" className="h-10 w-10 brightness-0 invert" /><strong className="text-white">CAPITAL PROPERTY CARE LLC</strong></div>
+            <p className="max-w-sm leading-7">Professional interior painting with clean, reliable service across the Capital Region.</p>
           </div>
-          <p>© 2026 Capital Property Care LLC. Fully insured. Albany County, NY.</p>
+          <div><strong className="mb-3 block text-white">Contact</strong><a href="tel:8383865620" className="block hover:text-white">(838) 386-5620</a><a href="mailto:edwardjones@capitalpropertycare.com" className="block hover:text-white">edwardjones@capitalpropertycare.com</a></div>
+          <div><strong className="mb-3 block text-white">Service Area</strong><p>Albany, Schenectady, Troy, Latham, and the Capital Region.</p><p className="mt-4 text-sm text-white/50">© {new Date().getFullYear()} Capital Property Care LLC. Fully insured.</p></div>
         </div>
       </footer>
     </main>

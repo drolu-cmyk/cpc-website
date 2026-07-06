@@ -1,25 +1,14 @@
-# Capital Property Care LLC Website
+# Capital Property Care LLC
 
-Production Next.js website for Capital Property Care LLC.
+Next.js landing page for Capital Property Care LLC, an interior painting company serving Albany, NY and the Capital Region.
 
-## Deployment
-
-This repository is connected to Vercel. Every push to `main` should trigger a production deployment automatically.
-
-Live site: https://cpc-website-rho.vercel.app/
-Repository: https://github.com/drolu-cmyk/cpc-website
-
-## Commands
+## Run locally
 
 ```bash
 npm install
 npm run dev
-npm run build
 ```
 
-## Notes
+## Production
 
-- Framework: Next.js
-- Styling: Tailwind CSS
-- Primary contact: Edward Jones / Capital Property Care LLC
-- Service area: Albany and the Capital Region, NY
+The project is configured for Vercel. Pushes to `main` deploy automatically after the GitHub repository is connected to Vercel.
