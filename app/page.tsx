@@ -344,12 +344,6 @@ export default function CapitalPropertyCare() {
               >
                 REQUEST A PAINTING QUOTE
               </button>
-              <button 
-                onClick={() => scrollToSection('services')}
-                className="inline-flex w-full sm:w-auto items-center justify-center px-5 sm:px-8 h-14 border border-[#CBD5E1] hover:bg-white font-medium text-[#334155] rounded-full transition-all"
-              >
-                Explore Services
-              </button>
             </div>
 
             {/* Trust Bar */}
@@ -372,12 +366,12 @@ export default function CapitalPropertyCare() {
           {/* Right Hero Image */}
           <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-[#0F2942]/10 aspect-[16/10] md:aspect-auto md:h-[520px]">
             <Image
-              src="/hero-living-room.png"
+              src="/hero-living-room.jpg"
               alt="Sophisticated contemporary living room with smooth painted walls and detailed trim by Capital Property Care" 
               fill
               sizes="(min-width: 768px) 50vw, 100vw"
               priority
-              className="absolute inset-0 w-full h-full object-cover object-[50%_48%]"
+              className="absolute inset-0 h-full w-full object-cover object-[54%_50%]"
             />
           </div>
         </div>
@@ -583,12 +577,8 @@ export default function CapitalPropertyCare() {
                 type="submit"
                 className="mt-8 w-full h-14 bg-[#F59E0B] hover:bg-[#D97706] disabled:bg-[#F59E0B]/70 text-white font-semibold text-base rounded-2xl flex items-center justify-center gap-2 active:scale-[0.985] transition-all shadow-sm"
               >
-                OPEN EMAIL REQUEST
+                EMAIL QUOTE REQUEST
               </button>
-
-              <p className="text-center text-xs text-[#64748B] mt-4">
-                This opens a prefilled email to Capital Property Care LLC so you can review and send your request.
-              </p>
             </form>
           ) : (
             /* Success State */
@@ -601,7 +591,7 @@ export default function CapitalPropertyCare() {
               </div>
               <h3 className="text-3xl font-semibold text-[#0F2942] tracking-tight mb-3">Email draft opened</h3>
               <p className="text-[#475569] text-lg max-w-sm mx-auto">
-                Review the prefilled email to Capital Property Care LLC, then send it from your email app to request your quote.
+                Your quote request email is addressed to Capital Property Care LLC. Send it from your email app to complete your request.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
@@ -629,10 +619,10 @@ export default function CapitalPropertyCare() {
           {/* Brand */}
           <div className="md:col-span-5">
             <div className="flex items-center gap-3 mb-4">
-              <Image src="/logo-optimized.png" alt="Capital Property Care" width={36} height={36} className="h-9 w-9 brightness-0 invert opacity-90" />
+              <Image src="/logo-footer.png" alt="Capital Property Care" width={36} height={36} className="h-9 w-9 object-contain brightness-0 invert opacity-85" />
               <div>
                 <div className="font-semibold tracking-tight text-lg text-white">CAPITAL PROPERTY CARE LLC</div>
-                <div className="text-[10px] text-white/50 -mt-0.5 tracking-widest">INTERIOR PAINTING • ALBANY NY</div>
+                <div className="text-[10px] text-white/50 -mt-0.5 tracking-widest">INTERIOR PAINTING | ALBANY NY</div>
               </div>
             </div>
             <p className="max-w-xs text-white/70 leading-relaxed">
@@ -650,19 +640,30 @@ export default function CapitalPropertyCare() {
             </div>
           </div>
 
-          {/* Legal / Trust */}
+          {/* Trust */}
           <div className="md:col-span-3 text-sm">
             <div className="font-semibold text-white mb-4 tracking-wider text-xs">TRUSTED &amp; INSURED</div>
             <div className="text-white/70 space-y-1.5">
               <div>Fully Insured</div>
               <div>Albany County, NY</div>
-              <div className="pt-3 text-[12px] text-white/50">© {new Date().getFullYear()} Capital Property Care LLC.<br />All Rights Reserved.</div>
+              <div>Professional Workmanship Guaranteed</div>
             </div>
           </div>
         </div>
 
-        <div className="mt-14 pt-8 border-t border-white/10 text-center text-xs text-white/50 max-w-7xl mx-auto px-6">
-          Privacy Policy • Terms of Service • Professional Workmanship Guaranteed
+        <div className="mt-14 border-t border-white/10 px-6 pt-8">
+          <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 text-center text-xs text-white/55 md:flex-row md:text-left">
+            <div className="flex items-center gap-3">
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/5 ring-1 ring-white/10">
+                <Image src="/logo-footer.png" alt="Capital Property Care LLC" width={24} height={24} className="h-6 w-6 object-contain brightness-0 invert opacity-70" />
+              </span>
+              <span>&copy; {new Date().getFullYear()} Capital Property Care LLC. All rights reserved.</span>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+              <a href="/privacy-policy" className="hover:text-white">Privacy Policy</a>
+              <a href="/terms-of-service" className="hover:text-white">Terms of Service</a>
+            </div>
+          </div>
         </div>
       </footer>
     </div>

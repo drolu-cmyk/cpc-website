@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Capital Property Care LLC | Interior Painting Albany NY",
     description: "Adding value to your home with clean, professional interior painting. Serving Albany and the Capital Region.",
-    images: [{ url: "/hero-living-room.png" }],
+    images: [{ url: "/hero-living-room.jpg" }],
     locale: "en_US",
     type: "website",
   },
