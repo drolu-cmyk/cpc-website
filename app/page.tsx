@@ -23,6 +23,125 @@ const servicesList = [
   "Small Drywall Repair"
 ];
 
+const iconStroke = {
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const
+};
+
+function CheckCircleIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" {...props}>
+      <circle cx="24" cy="24" r="18" {...iconStroke} />
+      <path d="m16 24.5 5.2 5.2L32.5 18" {...iconStroke} />
+    </svg>
+  );
+}
+
+function PaintRollerIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" {...props}>
+      <rect x="11" y="10" width="24" height="8" rx="2" {...iconStroke} />
+      <path d="M35 14h4a3 3 0 0 1 3 3v3a3 3 0 0 1-3 3H26a3 3 0 0 0-3 3v4" {...iconStroke} />
+      <rect x="18" y="30" width="10" height="12" rx="2" {...iconStroke} />
+      <path d="M13 20h18" {...iconStroke} />
+    </svg>
+  );
+}
+
+function ShieldCheckIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" {...props}>
+      <path d="M24 6 39 11v11c0 9.5-5.9 16.6-15 20-9.1-3.4-15-10.5-15-20V11L24 6Z" {...iconStroke} />
+      <path d="m17 24 4.5 4.5L31 18.5" {...iconStroke} />
+    </svg>
+  );
+}
+
+function WallsIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" {...props}>
+      <rect x="9" y="9" width="30" height="24" rx="2" {...iconStroke} />
+      <path d="M9 19h30M19 9v24M29 9v24" {...iconStroke} />
+      <path d="M15 39h18" {...iconStroke} />
+    </svg>
+  );
+}
+
+function CeilingsIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" {...props}>
+      <path d="M8 12h32M12 18h24" {...iconStroke} />
+      <path d="M15 29h16a4 4 0 0 0 4-4v-1" {...iconStroke} />
+      <rect x="11" y="26" width="18" height="7" rx="2" {...iconStroke} />
+      <path d="M20 33v8" {...iconStroke} />
+    </svg>
+  );
+}
+
+function TrimBaseboardsIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" {...props}>
+      <path d="M13 9v28h25" {...iconStroke} />
+      <path d="M18 14v18h19M13 37h26M19 31l-6 6" {...iconStroke} />
+      <path d="M24 37v-5M31 37v-5" {...iconStroke} />
+    </svg>
+  );
+}
+
+function CrownMoldingIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" {...props}>
+      <path d="M8 13h32M11 18h26M15 23h18" {...iconStroke} />
+      <path d="M15 23 31 39M23 23l14 14M32 23l7 7" {...iconStroke} />
+    </svg>
+  );
+}
+
+function DoorsIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" {...props}>
+      <path d="M15 41V8h20v33" {...iconStroke} />
+      <path d="M20 41V13h11v28M15 41h22" {...iconStroke} />
+      <circle cx="29" cy="26" r="1.4" fill="currentColor" />
+    </svg>
+  );
+}
+
+function AccentWallsIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" {...props}>
+      <rect x="9" y="9" width="22" height="30" rx="2" {...iconStroke} />
+      <path d="M31 17h5a3 3 0 0 1 3 3v4a3 3 0 0 1-3 3H24a3 3 0 0 0-3 3v3" {...iconStroke} />
+      <rect x="17" y="33" width="8" height="8" rx="2" {...iconStroke} />
+      <path d="M14 15h12M14 21h12" {...iconStroke} />
+    </svg>
+  );
+}
+
+function DrywallRepairIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" {...props}>
+      <rect x="9" y="10" width="18" height="20" rx="2" {...iconStroke} />
+      <path d="M14 17h8M14 23h5" {...iconStroke} />
+      <path d="m28 32 9-9 4 4-9 9-7 2 3-6Z" {...iconStroke} />
+      <path d="m35 25 4 4" {...iconStroke} />
+    </svg>
+  );
+}
+
+const serviceIcons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+  "Walls": WallsIcon,
+  "Ceilings": CeilingsIcon,
+  "Trim & Baseboards": TrimBaseboardsIcon,
+  "Crown Molding": CrownMoldingIcon,
+  "Doors": DoorsIcon,
+  "Accent Walls": AccentWallsIcon,
+  "Small Drywall Repair": DrywallRepairIcon
+};
+
 export default function CapitalPropertyCare() {
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
@@ -236,28 +355,16 @@ export default function CapitalPropertyCare() {
             {/* Trust Bar */}
             <div className="mt-10 grid gap-4 text-sm sm:flex sm:flex-wrap sm:gap-x-8">
               <div className="flex items-center gap-2 text-[#0F2942]">
-                <div className="w-5 h-5 rounded-full bg-[#0F2942] flex items-center justify-center flex-shrink-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 10l7-7m0 0l7 7" />
-                  </svg>
-                </div>
-                <span className="font-medium">Reliable</span>
+                <CheckCircleIcon className="h-8 w-8 flex-shrink-0" />
+                <span className="font-semibold">Reliable</span>
               </div>
               <div className="flex items-center gap-2 text-[#0F2942]">
-                <div className="w-5 h-5 rounded-full bg-[#0F2942] flex items-center justify-center flex-shrink-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2 2 2 0 012 2v2" />
-                  </svg>
-                </div>
-                <span className="font-medium">Clean Work</span>
+                <PaintRollerIcon className="h-8 w-8 flex-shrink-0" />
+                <span className="font-semibold">Clean Work</span>
               </div>
               <div className="flex items-center gap-2 text-[#0F2942]">
-                <div className="w-5 h-5 rounded-full bg-[#0F2942] flex items-center justify-center flex-shrink-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 8.945 11.922" />
-                  </svg>
-                </div>
-                <span className="font-medium">Professional Finish</span>
+                <ShieldCheckIcon className="h-8 w-8 flex-shrink-0" />
+                <span className="font-semibold">Professional Finish</span>
               </div>
             </div>
           </div>
@@ -266,13 +373,12 @@ export default function CapitalPropertyCare() {
           <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-[#0F2942]/10 aspect-[16/10] md:aspect-auto md:h-[520px]">
             <Image
               src="/hero-living-room.jpg"
-              alt="Beautifully painted modern living room interior by Capital Property Care" 
+              alt="Sophisticated contemporary living room with smooth painted walls and detailed trim by Capital Property Care" 
               fill
               sizes="(min-width: 768px) 50vw, 100vw"
               priority
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover object-[58%_44%]"
             />
-            <div className="absolute inset-0 bg-gradient-to-br from-[#0F2942]/10 via-transparent to-transparent" />
           </div>
         </div>
       </section>
@@ -288,19 +394,20 @@ export default function CapitalPropertyCare() {
 
           {/* Services Grid */}
           <div className="grid grid-cols-1 min-[420px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4">
-            {servicesList.map((service, index) => (
-              <div 
-                key={index} 
-                className="service-card group flex flex-col items-center text-center p-5 sm:p-6 rounded-2xl border border-[#E2E8F0] bg-white hover:border-[#0F2942]/30"
-              >
-                <div className="w-14 h-14 mb-4 rounded-full bg-[#F1F5F9] flex items-center justify-center group-hover:bg-[#0F2942]/5 transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7 text-[#0F2942]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                  </svg>
+            {servicesList.map((service, index) => {
+              const ServiceIcon = serviceIcons[service];
+              return (
+                <div 
+                  key={index} 
+                  className="service-card group flex min-h-[150px] flex-col items-center justify-center text-center p-5 rounded-2xl border border-[#E2E8F0] bg-white hover:border-[#0F2942]/30"
+                >
+                  <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-[#F8FAFC] text-[#0F2942] transition-colors group-hover:bg-[#EEF4F8]">
+                    <ServiceIcon className="h-10 w-10" />
+                  </div>
+                  <div className="font-bold text-[#0F2942] text-[14px] leading-tight">{service}</div>
                 </div>
-                <div className="font-semibold text-[#0F2942] text-[15px] leading-tight">{service}</div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="mt-10 text-center">
@@ -319,13 +426,13 @@ export default function CapitalPropertyCare() {
         <div className="grid md:grid-cols-12 gap-x-12 gap-y-10 items-center">
           {/* Left: Staircase image matching mockup */}
           <div className="md:col-span-5">
-            <div className="relative rounded-3xl overflow-hidden shadow-xl shadow-[#0F2942]/10 aspect-[4/3] md:aspect-auto md:h-full">
+            <div className="relative rounded-3xl overflow-hidden shadow-xl shadow-[#0F2942]/10 aspect-[4/3] md:aspect-auto md:h-[360px]">
               <Image
                 src="/staircase.jpg"
                 alt="Elegant interior staircase with white wainscoting and professional paint finish" 
                 fill
                 sizes="(min-width: 768px) 42vw, 100vw"
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover object-[62%_50%]"
               />
             </div>
           </div>
