@@ -372,12 +372,12 @@ export default function CapitalPropertyCare() {
           {/* Right Hero Image */}
           <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-[#0F2942]/10 aspect-[16/10] md:aspect-auto md:h-[520px]">
             <Image
-              src="/hero-living-room.jpg"
+              src="/hero-living-room.png"
               alt="Sophisticated contemporary living room with smooth painted walls and detailed trim by Capital Property Care" 
               fill
               sizes="(min-width: 768px) 50vw, 100vw"
               priority
-              className="absolute inset-0 w-full h-full object-cover object-[58%_44%]"
+              className="absolute inset-0 w-full h-full object-cover object-[50%_48%]"
             />
           </div>
         </div>
