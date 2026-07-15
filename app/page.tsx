@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import QuoteForm from "./components/QuoteForm";
+import ServiceIcon from "./components/ServiceIcon";
 import { SERVICES } from "./lib/quote";
 
 type TrackingProperties = Record<string, string | number | boolean | undefined>;
@@ -198,7 +199,7 @@ export default function CapitalPropertyCare() {
               {SERVICES.map((service) => (
                 <div key={service} className="service-card flex min-h-[150px] flex-col items-center justify-center rounded-2xl border border-[#E2E8F0] bg-white p-5 text-center hover:border-[#0F2942]/30">
                   <span className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-[#F8FAFC] text-[#0F2942]">
-                    <ServiceMark />
+                    <ServiceIcon service={service} className="h-10 w-10" />
                   </span>
                   <span className="text-[14px] font-bold leading-tight text-[#0F2942]">{service}</span>
                 </div>
